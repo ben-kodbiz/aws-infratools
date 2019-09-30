@@ -1,4 +1,6 @@
 #To calculate all bucket size in account
+#Best use with aws-vault
+
 import boto3
 import datetime
 
