@@ -1,3 +1,4 @@
+#To calculate all bucket size in account
 import boto3
 import datetime
 
