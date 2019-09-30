@@ -1,10 +1,13 @@
 AWS provides AWS organizations to support creating multiple AWS accounts for one organization.
 
-When using AWS organizations you usually create IAM users in the master account and provide different IAM roles in the member accounts, which the users in the master accont can assume. As a security best practice it is also recommended to require MFA to assume roles in the member accounts.
-
+IN AWS organizations you usually create IAM users in the master account and provide different IAM roles in the member accounts, which the users in the master accont can assume. As a security best practice it is also recommended to require MFA to assume roles in the member accounts.
 When having a setup like this it can often be tricky to handle access to the various AWS accounts via CLI. To handle this aws-vault comes in handy.
 AWS-VAULT
 aws-vault is tool for securely storing and accessing AWS credentials.
+
+You can get aws-vault at following github
+https://github.com/99designs/aws-vault
+
 
 You can set settings in  ~/.bashrc:
 
@@ -17,8 +20,7 @@ In my example setup I have a master account named and two member accounts which 
 
 AWS console access is configured in a config file ~/.aws/config. My master account is named fstehle-master which leads to the following configuration:
 
-You can get aws-vault at following github
-https://github.com/99designs/aws-vault
+
 
 [profile master]
 region = eu-west-1 # Use region eu-west-1 by default
@@ -32,7 +34,7 @@ Added credentials to profile "master" in vault
 We want to make sure the token is setup correctly by verifying the identity with GetCallerIdentity API call in the Security Token Service (STS). To do this AWS CLI needs to be installed, on a Mac this can be done with:
 
 $ apt install awscli
-Finally we can verify our identity by calling aws sts get-caller-identity inside the AWS acocunt fstehle-master:
+Finally we can verify our identity by calling aws sts get-caller-identity inside the AWS account master:
 
 $ aws-vault exec master aws sts get-caller-identity
 {
@@ -44,14 +46,14 @@ Make sure that the returned Account is the correct AWS account id of you master 
 
 Now that we setup access to our master account we can use aws-vault to get access to member accounts as well. Let’s create some member accounts in the AWS Organizations console.
 
-In my example I created to member accounts fstehle-memberaccount1 (account 123456789011) and fstehle-memberaccount2 (account 123456789012). I use the automatically generated role OrganizationAccountAccess of the member accounts, however you are free to create your own roles. If you want to require MFA to assume the roles make sure you set it up according to the documentation. Use the correct MFA serial of you IAM user in the configuration (arn:aws:iam::123456789010:mfa/fstehle in my case).
+In my example I created to member accounts member1 (account 123456789011) and fstehle-memberaccount2 (account 123456789012). I use the automatically generated role OrganizationAccountAccess of the member accounts, however you are free to create your own roles. If you want to require MFA to assume the roles make sure you set it up according to the documentation. Use the correct MFA serial of you IAM user in the configuration (arn:aws:iam::123456789010:mfa/fstehle in my case).
 
 This leads to a configuration in ~/.aws/config as follows:
 
 [profile fstehle-member1]
 region = eu-west-1 # Use region eu-west-1 by default
 role_arn = arn:aws:iam::123456789011:role/OrganizationAccountAccess
-mfa_serial = arn:aws:iam::123456789010:mfa/fstehle # Use MFA when assuming the role
+mfa_serial = arn:aws:iam::123456789010:mfa/member1 # Use MFA when assuming the role
 source_profile = master
 
 [profile fstehle-member2]
