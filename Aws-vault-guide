@@ -5,11 +5,16 @@ When having a setup like this it can often be tricky to handle access to the var
 AWS-VAULT
 aws-vault is tool for securely storing and accessing AWS credentials.
 
+Tools need for this guide
+Linux/Windows 10 with WSL/Mac
+awscli
+boto3 (optional)
+
 You can get aws-vault at following github
 https://github.com/99designs/aws-vault
 
 
-You can set settings in  ~/.bashrc:
+To make your life easier uou can set this settings in  ~/.bashrc:
 
 export AWS_VAULT_FILE_PASSPHRASE="123" # Avoid entering a passphrase when using aws-vault
 export AWS_VAULT_BACKEND="file" # Use the file backend of aws-vault
@@ -18,9 +23,7 @@ export AWS_ASSUME_ROLE_TTL="15m"
 
 In my example setup I have a master account named and two member accounts which will be configured later.
 
-AWS console access is configured in a config file ~/.aws/config. My master account is named fstehle-master which leads to the following configuration:
-
-
+AWS console access is configured in a config file ~/.aws/config. My master account is named master which leads to the following configuration:
 
 [profile master]
 region = eu-west-1 # Use region eu-west-1 by default
@@ -50,13 +53,13 @@ In my example I created to member accounts member1 (account 123456789011) and fs
 
 This leads to a configuration in ~/.aws/config as follows:
 
-[profile fstehle-member1]
+[profile member1]
 region = eu-west-1 # Use region eu-west-1 by default
 role_arn = arn:aws:iam::123456789011:role/OrganizationAccountAccess
 mfa_serial = arn:aws:iam::123456789010:mfa/member1 # Use MFA when assuming the role
 source_profile = master
 
-[profile fstehle-member2]
+[profile member2]
 region = eu-west-1 # Use region eu-west-1 by default
 role_arn = arn:aws:iam::123456789012:role/OrganizationAccountAccess
 mfa_serial = arn:aws:iam::123456789010:mfa/member2 # Use MFA when assuming the role
@@ -66,12 +69,11 @@ We can now invoke AWS CLI commands in the member accounts.
 Let’s get our caller identity in member1:
 
 $ aws-vault exec member1 aws sts get-caller-identity
-Enter token for arn:aws:iam::123456789010:mfa/master: 381200
+Enter token for arn:aws:iam::123456789010:mfa/master: 
 {
     "UserId": "AIDAIMS2AF3S7ZAYUAVQO:1273433422334232327",
     "Account": "123456789011",
     "Arn": "arn:aws:sts::123456789011:assumed-role/OrganizationAccountAccess/11111122223334455"
 }
-
 
 The MFA token for a specific AWS account is saved for the time of the configured session TTL (environment variable AWS_SESSION_TTL), which is 12 hours in my case
