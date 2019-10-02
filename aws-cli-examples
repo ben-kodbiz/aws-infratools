@@ -1,0 +1,84 @@
+
+This is list of useful aws-cli commands for listing/managing aws services without 
+going to web console.Most of this commands is best used with aws-vault.Most of this
+taken from stackoverlow/reddit/blog etc.
+
+
+Listing all ec2 instances in abc account
+
+aws-vault exec abc  -- aws ec2 describe-instances --query 
+'Reservations[].Instances[].[InstanceId,InstanceType,PrivateIpAddress,Tags[?Key==`Name`]| [0].Value]' --output table
+
+aws-vault exec abc -- aws ec2 describe-instances --query 
+"Reservations[*].Instances[*].{IP:PrivateIpAddress,ID:InstanceId,Type:InstanceType,State:State.Name,Name:Tags[0].Value}" 
+--output=table
+
+To list uncrypted EBS volume
+
+aws-vault exec abc  -- aws ec2 describe-volumes  --filter "Name=encrypted,Values=false" --query "length(Volumes[])"
+
+# list all security groups
+#Best use with aws-vault [aws command] for example 
+aws-vault exec accoutname aws ec2 describe-security-groups
+
+# create a security group
+aws ec2 create-security-group \
+    --vpc-id vpc-1a2b3c4d \
+    --group-name web-access \
+    --description "web access"
+
+# list details about a securty group
+aws ec2 describe-security-groups \
+    --group-id sg-0000000
+
+# open port 80, for everyone
+aws ec2 authorize-security-group-ingress \
+    --group-id sg-0000000 \
+    --protocol tcp \
+    --port 80 \
+    --cidr 0.0.0.0/24
+
+# open port 22, just for my ip
+aws ec2 authorize-security-group-ingress \
+    --group-id sg-0000000 \
+    --protocol tcp \
+    --port 80 \
+    --cidr $my_ip/24
+
+# remove a firewall rule from a group
+aws ec2 revoke-security-group-ingress \
+    --group-id sg-0000000 \
+    --protocol tcp \
+    --port 80 \
+    --cidr 0.0.0.0/24
+
+
+# list all groups
+aws iam list-groups
+
+# create a group
+aws iam create-group --group-name FullAdmins
+
+# delete a group
+aws iam delete-group \
+    --group-name PowerUser
+
+# list all policies
+aws iam list-policies
+
+# get a specific policy
+aws iam get-policy \
+    --policy-arn <value>
+
+# list all users, groups, and roles, for a given policy
+aws iam list-entities-for-policy \
+    --policy-arn <value>
+
+# list policies, for a given group
+aws iam list-attached-group-policies \
+    --group-name Poweruser
+
+# add a policy to a group
+aws iam attach-group-policy \
+    --group-name PowerUser \
+    --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
