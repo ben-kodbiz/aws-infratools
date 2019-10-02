@@ -56,10 +56,10 @@ Make sure that the returned Account is the correct AWS account id of you master 
 Now that we setup access to our master account we can use aws-vault to get access to member accounts as well. 
 Let’s create some member accounts in the AWS Organizations console.
 
-In my example I created to member accounts member1 (account 123456789011) and fstehle-memberaccount2 (account 123456789012).
+In my example I created to member accounts member1 (account 123456789011) and member2 (account 123456789012).
 I use the automatically generated role OrganizationAccountAccess of the member accounts, however you are free to create your own roles.
 If you want to require MFA to assume the roles make sure you set it up according to the documentation.
-Use the correct MFA serial of you IAM user in the configuration (arn:aws:iam::123456789010:mfa/ben in my case).
+Use the correct MFA serial of you IAM user in the configuration (arn:aws:iam::123456789010:mfa/master in my case).
 
 This leads to a configuration in ~/.aws/config as follows:
 
