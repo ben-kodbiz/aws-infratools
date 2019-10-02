@@ -1,6 +1,6 @@
 #! /usr/bin/python
 ################################################################################
-##  - Creates a CSV report for EBS volumes, including some snapshot information
+WIP still!!
 ################################################################################
 import csv
 import os, sys
@@ -12,7 +12,7 @@ from boto.exception import EC2ResponseError
 # Defaults, can be modified
 AWS_ACCESS_KEY = None
 AWS_SECRET_KEY = None
-AWS_REGIONS = u'us-east-1|us-west-1|us-west-2|eu-west-1|ap-southeast-1|ap-northeast-1|ap-southeast-2|sa-east-1'
+AWS_REGIONS = 'us-east-1|us-west-1|us-west-2|eu-west-1|ap-southeast-1|ap-northeast-1|ap-southeast-2|sa-east-1'
 
 def open_file (filepath):
     """
