@@ -3,10 +3,6 @@
 # Print all sg and setting
 
 # Your AWS credentials
-if [ -z ${AWS_ACCESS_KEY_ID} ]; then
-    export AWS_ACCESS_KEY_ID='***'
-    export AWS_SECRET_ACCESS_KEY='***'
-fi
 
 # Want to do this for all regions...
 REGIONS=(`aws ec2 describe-regions --region us-west-1 --output text | grep "-" | awk -F\t '{print $3}'`)
@@ -95,7 +91,6 @@ for REGION in ${REGIONS[*]}; do
 done
 
 # Remove any credentials from env.
-unset AWS_ACCESS_KEY_ID
-unset AWS_SECRET_ACCESS_KEY
 
-echo ""
+
+
