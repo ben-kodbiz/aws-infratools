@@ -1,6 +1,7 @@
 #!/bin/bash
 # This requires: awscli (http://aws.amazon.com/cli/)
 # Print all sg and setting
+#You will need authorization for Describe Region and others
 
 # Your AWS credentials
 
