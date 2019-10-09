@@ -52,6 +52,11 @@ aws ec2 revoke-security-group-ingress \
     --port 80 \
     --cidr 0.0.0.0/24
 
+# list all private AMI's, ImageId and Name tags
+aws ec2 describe-images --filter "Name=is-public,Values=false" \
+    --query 'Images[].[ImageId, Name]' \
+    --output text | sort -k2
+
 
 # list all groups
 aws iam list-groups
