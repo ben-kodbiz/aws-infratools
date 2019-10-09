@@ -57,11 +57,11 @@ aws ec2 revoke-security-group-ingress \
 aws iam list-groups
 
 # create a group
-aws iam create-group --group-name FullAdmins
+aws iam create-group --group-name Crescent
 
 # delete a group
 aws iam delete-group \
-    --group-name PowerUser
+    --group-name Rootoor
 
 # list all policies
 aws iam list-policies
@@ -76,7 +76,7 @@ aws iam list-entities-for-policy \
 
 # list policies, for a given group
 aws iam list-attached-group-policies \
-    --group-name Poweruser
+    --group-name Rootoor
 
 # add a policy to a group
 aws iam attach-group-policy \
@@ -118,9 +118,10 @@ aws ec2 describe-images \
   --filters Name=name,Values=*-name-contains-* Name=state,Values=available \
   --query 'Images[*].[ImageId,Name] | sort(@)'
 
+#Not working
 # Get available Cloudformation stacks, sort by age
-aws cloudformation list-stacks \
-  --query 'StackSummaries[?StackStatus==`CREATE_COMPLETE`].[CreationTime,StackName] | sort(@)'
+#aws cloudformation list-stacks \
+#  --query 'StackSummaries[?StackStatus==`CREATE_COMPLETE`].[CreationTime,StackName] | sort(@)'
 
 # Get the private IPs of a set of instances based on a shared tag*
 # *only useful if you're expecting the instance to have only one ENI.
@@ -128,7 +129,7 @@ aws ec2 describe-instances \
   --filter Name=tag:Name,Values=tag \
   --query 'Reservations[*].Instances[].[NetworkInterfaces[0].PrivateIpAddress]'
 
-# List record sets
+# List record sets(Please set the id)
 aws route53 list-resource-record-sets \
   --hosted-zone-id id \
   --query 'ResourceRecordSets[*].[Name]'
@@ -149,8 +150,8 @@ aws ec2 describe-instance-attribute \
   --query 'Userdata.Value' | base64 --decode
 
 # Get account security groups and format the output as JSON
-aws ec2 describe-security-groups \
-  --query SecurityGroups[*].{ID: GroupId}
+#aws ec2 describe-security-groups \
+# --query SecurityGroups[*].{ID: GroupId}
 
 # Get the first security group ID alphabetically
 aws ec2 describe-security-groups \
