@@ -61,7 +61,7 @@ def lambda_handler(event, context):
                      ec.terminate_instances(InstanceIds=instance_ids)
                      body="AWS Account:" + AWSUser + "\n\nAWS Account Number:" + AWSAccountID + "\n\nInstance Name:" + name + "\n\nInstance ID:" + instance['InstanceId'] + "\n\nTo be Removed In:Now\n\n\n\rNote:\n\nOwner tag is missing from this instance, hence,instance is removed." 
                      send email that instance is terminated
-                     send_mail('sender@example.com', 'recipient@example.com', 'Ireland:Notification of terminating instances', body)
+                     send_mail('sender@example.com', 'johndoe@doe.com', 'US:Notification of terminating instances', body)
 
                     else:
                       
