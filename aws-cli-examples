@@ -161,3 +161,65 @@ aws ec2 describe-instance-attribute \
 # Get the first security group ID alphabetically
 aws ec2 describe-security-groups \
   --query 'SecurityGroups[*].GroupId | sort(@) | [0]'
+  
+## Service Limits checks can help you avoid resource starvation within you AWS environment, allowing you to expand fast your AWS infrastructure.
+#The following table shows the service limits supported by AWS Trusted Advisor:
+#Service	Limits
+#AWS Elastic Block Store (EBS)	Active volumes
+#Active snapshots
+#General Purpose (SSD) volume storage (GiB)
+#Provisioned IOPS
+#Provisioned IOPS (SSD) volume storage (GiB)
+#Magnetic volume storage (GiB)
+#AWS Relational Database Service (RDS)	Clusters
+#Cluster parameter groups
+#Cluster roles
+#DB instances
+#DB parameter groups
+#DB security groups
+#DB snapshots per user
+#Event subscriptions
+#Max auths per security group
+#Option groups
+#Read replicas per master
+#Reserved Instances
+#Storage quota (GiB)
+#Subnet groups
+#Subnets per subnet group
+#AWS Simple Email Service (SES)	Daily sending quota
+#AWS Virtual Private Cloud (VPC)	Elastic IP addresses (EIPs)
+#Internet gateways
+#VPCs
+#Auto Scaling	Auto Scaling groups
+#Launch configurations
+#AWS CloudFormation	Stacks
+#Elastic Load Balancing (ELB)	Active load balancers
+#Identity and Access Management (IAM)	Groups
+#Instance profiles
+#Policies
+#Roles
+#Server certificates
+#Users
+#Usage examples----------
+
+aws support describe-trusted-advisor-checks
+	--region us-east-1 \
+	--language en \
+	--query "checks[?name=='Service Limits'].id" \
+
+
+aws support describe-trusted-advisor-check-result
+	--region us-east-1 \
+	--language en   \
+	--check-id blabla \
+	--query 'result.sort_by(flaggedResources[?status!=`ok`],&metadata[2])[].metadata' \
+	--output table \
+	
+aws support describe-trusted-advisor-check-result
+	--region us-east-1 \
+	--language en   \
+	--check-id blabla \
+	--query 'result.sort_by(flaggedResources[?status!=`ok`],&metadata[2])[].metadata' \
+	--output table \
+    
+    
