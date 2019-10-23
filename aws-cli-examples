@@ -221,4 +221,12 @@ aws support describe-trusted-advisor-check-result
 	--query 'result.sort_by(flaggedResources[?status!=`ok`],&metadata[2])[].metadata' \
 	--output table \
     
-    
+ aws configservice get-compliance-details-by-config-rule --config-rule-name CIS-InstancesMustUseIamRoles
+ 
+ aws configservice get-compliance-details-by-config-rule --config-rule-name CIS-UsersMustNotHaveAssociatedPolicies
+ 
+ aws-vault exec cprod -- aws configservice get-compliance-details-by-config-rule --config-rule-name CIS-KmsCustomerKeysMustBeRotated
+ 
+ aws-vault exec cprod -- aws configservice get-compliance-details-by-config-rule --config-rule-name CIS-VpcPeeringRouteTablesMustBeLeastAccess
+ 
+ aws configservice get-compliance-details-by-config-rule --config-rule-name CIS-SecurityGroupsMustRestrictSshTraffic
