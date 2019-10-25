@@ -200,7 +200,7 @@ aws ec2 describe-security-groups \
 #Server certificates
 #Users
 #Usage examples----------
-
+ #AWS trusted advisor cli examples
 aws support describe-trusted-advisor-checks
 	--region us-east-1 \
 	--language en \
@@ -220,7 +220,11 @@ aws support describe-trusted-advisor-check-result
 	--check-id blabla \
 	--query 'result.sort_by(flaggedResources[?status!=`ok`],&metadata[2])[].metadata' \
 	--output table \
-    
+ 
+ aws-vault exec cdev -- aws support describe-trusted-advisor-check-result --check-id Pfx0RwqBli  --query 'result.sort_by(flaggedResources[?status!="ok"],&metadata[2])[].metadata' --output table --region us-east-1 
+ 
+ 
+ #aws Config cli
  aws configservice get-compliance-details-by-config-rule --config-rule-name CIS-InstancesMustUseIamRoles
  
  aws configservice get-compliance-details-by-config-rule --config-rule-name CIS-UsersMustNotHaveAssociatedPolicies
@@ -230,3 +234,5 @@ aws support describe-trusted-advisor-check-result
  aws-vault exec cprod -- aws configservice get-compliance-details-by-config-rule --config-rule-name CIS-VpcPeeringRouteTablesMustBeLeastAccess
  
  aws configservice get-compliance-details-by-config-rule --config-rule-name CIS-SecurityGroupsMustRestrictSshTraffic
+ 
+ 
