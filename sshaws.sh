@@ -2,10 +2,10 @@
 #For accessing ec2 ssh based instances by modifying security group ingress  based
 #on your dynamic ip.Its better than using those dreaded 0.0.0.0/0
 #Things that you need
-#working bash shell or wsl
-#configured aws creds
-#And you good,
-#Oh please use your sg-id(example: sg-01da4fd4299ec7aaabbcc)
+# 1)working bash shell or wsl
+# 2)configured aws creds
+#And you good, Please use your sg-id(example: sg-01da4fd4299ec7aaabbcc)
+#for example ./sshaws sg-01da4fd4299ec7aaabbcc 22
 
 
 # Usage: ./sshaws <Security Group Id> <Port>
