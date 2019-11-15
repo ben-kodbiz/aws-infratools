@@ -5,7 +5,7 @@
 #working bash shell or wsl
 #configured aws creds
 #And you good,
-#Oh please use you sg-id(example: sg-01da4fd4299ec7aaabbcc)
+#Oh please use your sg-id(example: sg-01da4fd4299ec7aaabbcc)
 
 
 # Usage: ./sshaws <Security Group Id> <Port>
