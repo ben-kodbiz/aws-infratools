@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-#For accessing ec2 ssh based instances by modifying security group ingress by based
-#on your dynamic ip.Its better than using 0.0.0.0/0 
+#For accessing ec2 ssh based instances by modifying security group ingress  based
+#on your dynamic ip.Its better than using those dreaded 0.0.0.0/0 
 
 
-# Usage: ./sshawsdynsgtator <Security Group Id> <Port>
+# Usage: ./sshaws <Security Group Id> <Port>
 
 # Standardised error process. Errors to STDERR.
 function error_and_die() {
@@ -11,7 +11,7 @@ function error_and_die() {
   exit 1;
 }
 
-# Declare variables because autism.
+
 declare access_granted="false";
 declare allowed_cidrs;
 declare group_id="${1}"; # Define it here, or take it from "${1}", use GNU getopt... whatever you want.
