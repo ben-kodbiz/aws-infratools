@@ -17,6 +17,9 @@ To list uncrypted EBS volume
 #EBS aws-cli example
 aws-vault exec abc  -- aws ec2 describe-volumes  --filter "Name=encrypted,Values=false" --query "length(Volumes[])"
 
+#Get ec2 ip using instances id
+aws-vault exec Alkp -- aws ec2 describe-instances --instance-id i-07d4213ecab4a2d5e  --query 'Reservations[].Instances[].PrivateIpAddress' | grep -vE '\[|\]' | awk -F'"' '{ print $2 }'
+
 #The following command lists all EBS snapshots using the describe-snapshots operation, where the time stamp is older than one month (--#date='-1 month').
 aws ec2 describe-snapshots --owner self | jq '.Snapshots[] | select(.StartTime < "'$(date --date='-1 month' '+%Y-%m-%d')'") | [.Description, .StartTime, .SnapshotId]'
  
