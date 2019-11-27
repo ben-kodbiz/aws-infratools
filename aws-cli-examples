@@ -221,6 +221,8 @@ aws support describe-trusted-advisor-checks
 	--language en \
 	--query "checks[?name=='Service Limits'].id" \
 
+aws-vault exec cprod -- aws support describe-trusted-advisor-checks     --language en     --query "checks[].[id, category, name]"  --output text 
+
 
 aws support describe-trusted-advisor-check-result
 	--region us-east-1 \
